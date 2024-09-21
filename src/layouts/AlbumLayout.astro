@@ -1,0 +1,60 @@
+---
+import Album from "../components/Album.astro";
+import BaseLayout from "./BaseLayout.astro";
+
+const { frontmatter } = Astro.props;
+const allAlbums = await Astro.glob("../pages/albums/*.md");
+const allOtherAlbums = allAlbums.filter(
+	(album) => album.frontmatter.title !== frontmatter.title
+);
+---
+
+<BaseLayout title={frontmatter.title}>
+	<main>
+		<div class="album-cont">
+			<div class="img-cont" transition:name={`${frontmatter.image} cover`}>
+				<img src={frontmatter.image} alt={frontmatter.title} />
+			</div>
+			<div>
+				<h1>{frontmatter.title}</h1>
+				<h2>{frontmatter.author}</h2>
+			</div>
+		</div>
+		<div class="other-albums">
+			{
+				allOtherAlbums.map((album) => (
+					<Album
+						url={album.url}
+						title={album.frontmatter.title}
+						image={album.frontmatter.image}
+					/>
+				))
+			}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	main {
+		padding: 1rem;
+	}
+	.album-cont {
+		display: grid;
+		grid-template-columns: 250px 1fr;
+		gap: 1.5rem;
+	}
+	.other-albums {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		margin-top: 3rem;
+	}
+	.img-cont {
+		width: 100%;
+		aspect-ratio: 1;
+		display: flex;
+	}
+	img {
+		border-radius: 1rem;
+	}
+</style>

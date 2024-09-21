@@ -1,0 +1,18 @@
+---
+import AlbumLayout from "../layouts/AlbumLayout.astro";
+
+export async function getStaticPaths() {
+	const allAlbums = await Astro.glob("./albums/*.md");
+
+	return allAlbums.map((album) => {
+		return {
+			params: { album },
+			props: { infos: allAlbums },
+		};
+	});
+}
+const { album } = Astro.params;
+const { infos } = Astro.props;
+---
+
+<AlbumLayout title={infos.title} author={infos.author} image={infos.image} />

@@ -1,0 +1,32 @@
+---
+const { url, title, image } = Astro.props;
+---
+
+<a href={`${url}`} class="album">
+	<div class="img-cont" transition:name={`${image} cover`}>
+		<img src={image} alt="image" />
+	</div>
+	<p>{title}</p>
+</a>
+
+<style>
+	.album {
+		display: grid;
+		outline: 2px solid black;
+		border-radius: 1rem 1rem;
+	}
+	.img-cont {
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+
+		img {
+			border-radius: 1rem 1rem 0 0;
+		}
+	}
+	p {
+		text-align: center;
+		font-size: 1.5rem;
+		padding: 0.5rem;
+	}
+</style>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Album from "../components/Album.astro";
+
+const allAlbums = await Astro.glob("./albums/*.md");
+---
+
+<BaseLayout title="Accueil">
+	<main>
+		<h1>Vinyl shop</h1>
+		<div class="albums-cont">
+			{
+				allAlbums.map((album) => (
+					<Album
+						url={album.url}
+						title={album.frontmatter.title}
+						image={album.frontmatter.image}
+					/>
+				))
+			}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	main {
+		padding: 1rem;
+	}
+	.albums-cont {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		margin-top: 2rem;
+	}
+</style>
