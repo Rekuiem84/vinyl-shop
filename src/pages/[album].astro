@@ -6,11 +6,12 @@ export async function getStaticPaths() {
 
 	return allAlbums.map((album) => {
 		return {
-			params: { album },
+			params: { album: album.url },
 			props: { infos: allAlbums },
 		};
 	});
 }
+const { album } = Astro.params;
 const { infos } = Astro.props;
 ---
 
